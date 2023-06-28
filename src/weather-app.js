@@ -31,6 +31,8 @@ const weatherApp = () => {
     const element = createBasicDiv(["weather-app-container"]);
     const info = createBasicDiv(["weather-app-info-container"], element);
     const temperature = createBasicDiv(["weather-app-temperature"], info);
+    const weatherIcon = document.createElement("img");
+    info.appendChild(weatherIcon);
     const country = createBasicDiv(["weather-app-country"], info);
     const city = createBasicDiv(["weather-app-city"], info);
     const region = createBasicDiv(["weather-app-region"], info);
@@ -101,6 +103,7 @@ const weatherApp = () => {
                         temperature.textContent = `${currentWeatherInformation.tempc}°C`;
                         break;
                 }
+                weatherIcon.src = await currentWeatherInformation.conditionIcon;
                 country.textContent = currentWeatherInformation.countryName;
                 city.textContent = currentWeatherInformation.cityName;
                 region.textContent = currentWeatherInformation.region;
