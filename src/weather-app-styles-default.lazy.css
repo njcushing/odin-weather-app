@@ -1,10 +1,21 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&family=Righteous&family=Staatliches&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0&family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,700,1,0&display=swap');
+
 :root {
-    --weather-app-scale: 1;
+    --nunito-font-family: Nunito, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+        sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --righteous-font-family: Righteous, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+        sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    
+    --weather-app-scale: 1.0;
     --weather-app-width: 24rem;
     --weather-app-height: 32rem;
 }
 
 .weather-app-container {
+    font-family: Nunito, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+        sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: var(--nunito-font-family);
     display: grid;
     grid-template-rows: auto;
     width: calc(var(--weather-app-scale, 1) * var(--weather-app-width, 24rem));
