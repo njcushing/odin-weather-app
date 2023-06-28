@@ -5,8 +5,10 @@
 }
 
 .weather-app-container {
-    width: calc(var(--weather-app-scale, 1) * var(--weather-app-width, 12rem));
-    height: calc(var(--weather-app-scale, 1) * var(--weather-app-height, 16rem));
+    display: grid;
+    grid-template-rows: auto;
+    width: calc(var(--weather-app-scale, 1) * var(--weather-app-width, 24rem));
+    height: calc(var(--weather-app-scale, 1) * var(--weather-app-height, 32rem));
     background-color: rgba(0, 0, 0, 0.3);
     outline: 2px solid #000;
     border-radius: 1rem;
