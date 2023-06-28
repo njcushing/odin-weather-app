@@ -1,7 +1,33 @@
 const weatherApp = (parentElement) => {
-    const element = document.createElement("div");
-    element.classList.add("weather-app-container");
-    parentElement.appendChild(element);
+    let currentWeatherInformation = null;
+
+    const createBasicDiv = (
+        classes = [],
+        parent = null,
+        id = "",
+        textContent = ""
+    ) => {
+        const newElement = document.createElement("div");
+        classes.forEach((className) => {
+            if (typeof className === "string" && className.length > 0) {
+                newElement.classList.add(className);
+            }
+        });
+        if (typeof id === "string" && id.length > 0) {
+            newElement.setAttribute("id", id);
+        }
+        if (typeof textContent === "string" && textContent.length > 0) {
+            newElement.textContent = textContent;
+        }
+        try {
+            if (parent) parent.appendChild(newElement);
+        } catch (error) {
+            console.log(error);
+        }
+        return newElement;
+    };
+
+    const element = createBasicDiv(["weather-app-container"], parentElement);
 
     const requestNewLocation = async (location) => {
         try {
@@ -14,7 +40,9 @@ const weatherApp = (parentElement) => {
                 throw new Error("Weather response is not ok.");
             }
             const weatherJSON = await weatherResponse.json();
-            return getRelevantWeatherInformationFromJSON(weatherJSON);
+            currentWeatherInformation =
+                getRelevantWeatherInformationFromJSON(weatherJSON);
+            refreshDisplay();
         } catch (error) {
             console.log(`Error! ${error.message}`);
         }
