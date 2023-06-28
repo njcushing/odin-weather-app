@@ -1,4 +1,4 @@
-const weatherApp = (parentElement) => {
+const weatherApp = () => {
     let currentWeatherInformation = null;
     const temperatureUnit = "celsius";
 
@@ -28,11 +28,12 @@ const weatherApp = (parentElement) => {
         return newElement;
     };
 
-    const element = createBasicDiv(["weather-app-container"], parentElement);
-    const temperature = createBasicDiv(["weather-app-temperature"], element);
-    const country = createBasicDiv(["weather-app-country"], element);
-    const city = createBasicDiv(["weather-app-city"], element);
-    const region = createBasicDiv(["weather-app-region"], element);
+    const element = createBasicDiv(["weather-app-container"]);
+    const info = createBasicDiv(["weather-app-info-container"], element);
+    const temperature = createBasicDiv(["weather-app-temperature"], info);
+    const country = createBasicDiv(["weather-app-country"], info);
+    const city = createBasicDiv(["weather-app-city"], info);
+    const region = createBasicDiv(["weather-app-region"], info);
 
     const requestNewLocation = async (location) => {
         try {
@@ -73,6 +74,18 @@ const weatherApp = (parentElement) => {
     });
 
     const getAPIKey = () => "defd47dda70843cfaa084416232506";
+
+    const searchBar = createBasicDiv(["weather-app-search-bar"]);
+    const searchBarInput = document.createElement("input");
+    const searchBarButton = document.createElement("button");
+    searchBarInput.classList.add("weather-app-search-bar-input");
+    searchBarButton.classList.add("weather-app-search-bar-button");
+    searchBarButton.addEventListener("click", () => {
+        requestNewLocation(searchBarInput.value);
+    });
+    searchBar.appendChild(searchBarInput);
+    searchBar.appendChild(searchBarButton);
+    element.appendChild(searchBar);
 
     const refreshDisplay = async () => {
         if (currentWeatherInformation) {

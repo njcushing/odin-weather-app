@@ -4,5 +4,6 @@ import weatherAppStyles from "./weather-app-styles-default.lazy.css";
 
 const body = document.querySelector("body");
 const newWeatherApp = weatherApp(body);
+body.appendChild(newWeatherApp);
 
 weatherAppStyles.use();
