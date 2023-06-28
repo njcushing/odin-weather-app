@@ -80,6 +80,8 @@ const weatherApp = () => {
     const searchBarButton = document.createElement("button");
     searchBarInput.classList.add("weather-app-search-bar-input");
     searchBarButton.classList.add("weather-app-search-bar-button");
+    searchBarButton.classList.add("material-symbols-rounded");
+    searchBarButton.textContent = "Search";
     searchBarButton.addEventListener("click", () => {
         requestNewLocation(searchBarInput.value);
     });
