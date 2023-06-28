@@ -1,5 +1,6 @@
 const weatherApp = (parentElement) => {
     let currentWeatherInformation = null;
+    const temperatureUnit = "celsius";
 
     const createBasicDiv = (
         classes = [],
@@ -28,6 +29,7 @@ const weatherApp = (parentElement) => {
     };
 
     const element = createBasicDiv(["weather-app-container"], parentElement);
+    const temperature = createBasicDiv(["weather-app-temperature"], element);
     const country = createBasicDiv(["weather-app-country"], element);
     const city = createBasicDiv(["weather-app-city"], element);
     const region = createBasicDiv(["weather-app-region"], element);
@@ -75,6 +77,15 @@ const weatherApp = (parentElement) => {
     const refreshDisplay = async () => {
         if (currentWeatherInformation) {
             try {
+                switch (temperatureUnit) {
+                    case "fahrenheit":
+                        temperature.textContent = `${currentWeatherInformation.tempf}°F`;
+                        break;
+                    case "celsius":
+                    default:
+                        temperature.textContent = `${currentWeatherInformation.tempc}°C`;
+                        break;
+                }
                 country.textContent = currentWeatherInformation.countryName;
                 city.textContent = currentWeatherInformation.cityName;
                 region.textContent = currentWeatherInformation.region;

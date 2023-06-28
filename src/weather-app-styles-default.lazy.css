@@ -10,6 +10,7 @@
     --weather-app-scale: 1.0;
     --weather-app-width: 24rem;
     --weather-app-height: 32rem;
+    --weather-app-temperature-font-size: 5rem;
 }
 
 .weather-app-container {
@@ -23,4 +24,8 @@
     background-color: rgba(0, 0, 0, 0.3);
     outline: 2px solid #000;
     border-radius: 1rem;
+}
+
+.weather-app-temperature {
+    font-size: calc(var(--weather-app-temperature-font-size, 5rem) * var(--weather-app-scale, 1));
 }
