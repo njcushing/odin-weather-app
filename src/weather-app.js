@@ -28,6 +28,9 @@ const weatherApp = (parentElement) => {
     };
 
     const element = createBasicDiv(["weather-app-container"], parentElement);
+    const country = createBasicDiv(["weather-app-country"], element);
+    const city = createBasicDiv(["weather-app-city"], element);
+    const region = createBasicDiv(["weather-app-region"], element);
 
     const requestNewLocation = async (location) => {
         try {
@@ -68,6 +71,20 @@ const weatherApp = (parentElement) => {
     });
 
     const getAPIKey = () => "defd47dda70843cfaa084416232506";
+
+    const refreshDisplay = async () => {
+        if (currentWeatherInformation) {
+            try {
+                country.textContent = currentWeatherInformation.countryName;
+                city.textContent = currentWeatherInformation.cityName;
+                region.textContent = currentWeatherInformation.region;
+            } catch (error) {
+                console.log(`Weather app refresh error: ${error.message}`);
+            }
+        }
+    };
+
+    requestNewLocation("london");
 
     return element;
 };
