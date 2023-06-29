@@ -50,6 +50,14 @@
     padding: 1rem;
     gap: calc(0.3rem * var(--weather-app-scale, 1)) calc(1.0rem * var(--weather-app-scale, 1));
 }
+.weather-app-info-container.loading > * {
+    display: none;
+}
+.weather-app-info-container.loading::after {
+    content: "Loading...";
+    grid-area: 1 / 1 / -1 / -1;
+    align-self: center;
+}
 
 .weather-app-city {
     grid-area: 1 / 2 / 2 / -1;
