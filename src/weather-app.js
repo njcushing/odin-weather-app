@@ -34,11 +34,12 @@ const weatherApp = () => {
     const info = createBasicDiv(["weather-app-info-container"], element);
     const temperature = createBasicDiv(["weather-app-temperature"], info);
     const weatherIcon = document.createElement("img");
+    weatherIcon.classList.add("weather-app-icon");
     info.appendChild(weatherIcon);
     const condition = createBasicDiv(["weather-app-condition"], info);
-    const country = createBasicDiv(["weather-app-country"], info);
     const city = createBasicDiv(["weather-app-city"], info);
     const region = createBasicDiv(["weather-app-region"], info);
+    const country = createBasicDiv(["weather-app-country"], info);
     const windDir = createBasicDiv(["weather-app-wind-direction"], info);
     const windSpd = createBasicDiv(["weather-app-wind-speed"], info);
     const humidity = createBasicDiv(["weather-app-humidity"], info);
@@ -47,6 +48,7 @@ const weatherApp = () => {
 
     const requestNewLocation = async (location) => {
         try {
+            info.classList.add("loading");
             const getWeatherAPIKey = await getAPIKey();
             const weatherResponse = await fetch(
                 `https://api.weatherapi.com/v1/current.json?key=${getWeatherAPIKey}&q=${location}`,
@@ -59,6 +61,7 @@ const weatherApp = () => {
             currentWeatherInformation =
                 getRelevantWeatherInformationFromJSON(weatherJSON);
             refreshDisplay();
+            info.classList.remove("loading");
         } catch (error) {
             console.log(`Error! ${error.message}`);
         }
@@ -101,6 +104,7 @@ const weatherApp = () => {
 
     const refreshDisplay = async () => {
         if (currentWeatherInformation) {
+            info.classList.add("loading");
             try {
                 switch (temperatureUnit) {
                     case "fahrenheit":
@@ -113,10 +117,10 @@ const weatherApp = () => {
                 }
                 weatherIcon.src = await currentWeatherInformation.conditionIcon;
                 condition.textContent = currentWeatherInformation.conditionText;
-                country.textContent = currentWeatherInformation.countryName;
                 city.textContent = currentWeatherInformation.cityName;
                 region.textContent = currentWeatherInformation.region;
-                windDir.textContent = `Wind Direction: ${currentWeatherInformation.windDeg} (${currentWeatherInformation.windDir})`;
+                country.textContent = currentWeatherInformation.countryName;
+                windDir.textContent = `Wind Direction: ${currentWeatherInformation.windDeg}° (${currentWeatherInformation.windDir})`;
                 switch (windSpeedUnit) {
                     case "kph":
                         windSpd.textContent = `Wind Speed: ${currentWeatherInformation.windSpeedKph} kilometres per hour`;
@@ -140,6 +144,7 @@ const weatherApp = () => {
             } catch (error) {
                 console.log(`Weather app refresh error: ${error.message}`);
             }
+            info.classList.remove("loading");
         }
     };
 
