@@ -1,8 +1,8 @@
 const weatherApp = () => {
     let currentWeatherInformation = null;
-    const temperatureUnit = "celsius";
-    const windSpeedUnit = "mph";
-    const precipitationUnit = "mm";
+    let temperatureUnit = "celsius";
+    let windSpeedUnit = "mph";
+    let precipitationUnit = "mm";
 
     const createBasicDiv = (
         classes = [],
@@ -31,6 +31,33 @@ const weatherApp = () => {
     };
 
     const element = createBasicDiv(["weather-app-container"]);
+
+    const infoButtons = createBasicDiv(["weather-app-info-buttons"], element);
+    const temperatureButton = document.createElement("button");
+    temperatureButton.classList.add("weather-app-temperature-button");
+    temperatureButton.addEventListener("click", () => {
+        if (temperatureUnit === "celsius") temperatureUnit = "fahrenheit";
+        else temperatureUnit = "celsius";
+        refreshDisplay();
+    });
+    infoButtons.appendChild(temperatureButton);
+    const windSpeedButton = document.createElement("button");
+    windSpeedButton.classList.add("weather-app-wind-speed-button");
+    windSpeedButton.addEventListener("click", () => {
+        if (windSpeedUnit === "kph") windSpeedUnit = "mph";
+        else windSpeedUnit = "kph";
+        refreshDisplay();
+    });
+    infoButtons.appendChild(windSpeedButton);
+    const precipitationButton = document.createElement("button");
+    precipitationButton.classList.add("weather-app-precipitation-button");
+    precipitationButton.addEventListener("click", () => {
+        if (precipitationUnit === "mm") precipitationUnit = "in";
+        else precipitationUnit = "mm";
+        refreshDisplay();
+    });
+    infoButtons.appendChild(precipitationButton);
+
     const info = createBasicDiv(["weather-app-info-container"], element);
     const temperature = createBasicDiv(["weather-app-temperature"], info);
     const weatherIcon = document.createElement("img");
@@ -47,8 +74,8 @@ const weatherApp = () => {
     const lastUpdated = createBasicDiv(["weather-app-last-updated"], info);
 
     const requestNewLocation = async (location) => {
+        info.classList.add("loading");
         try {
-            info.classList.add("loading");
             const getWeatherAPIKey = await getAPIKey();
             const weatherResponse = await fetch(
                 `https://api.weatherapi.com/v1/current.json?key=${getWeatherAPIKey}&q=${location}`,
@@ -61,10 +88,10 @@ const weatherApp = () => {
             currentWeatherInformation =
                 getRelevantWeatherInformationFromJSON(weatherJSON);
             refreshDisplay();
-            info.classList.remove("loading");
         } catch (error) {
             console.log(`Error! ${error.message}`);
         }
+        info.classList.remove("loading");
     };
 
     const getRelevantWeatherInformationFromJSON = (weatherJSON) => ({
@@ -106,14 +133,12 @@ const weatherApp = () => {
         if (currentWeatherInformation) {
             info.classList.add("loading");
             try {
-                switch (temperatureUnit) {
-                    case "fahrenheit":
-                        temperature.textContent = `${currentWeatherInformation.tempf}°F`;
-                        break;
-                    case "celsius":
-                    default:
-                        temperature.textContent = `${currentWeatherInformation.tempc}°C`;
-                        break;
+                if (temperatureUnit === "celsius") {
+                    temperatureButton.textContent = "°C";
+                    temperature.textContent = `${currentWeatherInformation.tempc}°C`;
+                } else {
+                    temperatureButton.textContent = "°F";
+                    temperature.textContent = `${currentWeatherInformation.tempf}°f`;
                 }
                 weatherIcon.src = await currentWeatherInformation.conditionIcon;
                 condition.textContent = currentWeatherInformation.conditionText;
@@ -121,24 +146,20 @@ const weatherApp = () => {
                 region.textContent = currentWeatherInformation.region;
                 country.textContent = currentWeatherInformation.countryName;
                 windDir.textContent = `Wind Direction: ${currentWeatherInformation.windDeg}° (${currentWeatherInformation.windDir})`;
-                switch (windSpeedUnit) {
-                    case "kph":
-                        windSpd.textContent = `Wind Speed: ${currentWeatherInformation.windSpeedKph} kilometres per hour`;
-                        break;
-                    case "mph":
-                    default:
-                        windSpd.textContent = `Wind Speed: ${currentWeatherInformation.windSpeedMph} miles per hour`;
-                        break;
+                if (windSpeedUnit === "mph") {
+                    windSpeedButton.textContent = "mph";
+                    windSpd.textContent = `Wind Speed: ${currentWeatherInformation.windSpeedMph} miles per hour`;
+                } else {
+                    windSpeedButton.textContent = "kph";
+                    windSpd.textContent = `Wind Speed: ${currentWeatherInformation.windSpeedKph} kilometres per hour`;
                 }
                 humidity.textContent = `Humidity: ${currentWeatherInformation.humidity}%`;
-                switch (precipitationUnit) {
-                    case "in":
-                        precipitation.textContent = `Precipitation: ${currentWeatherInformation.precipInch} inches`;
-                        break;
-                    case "mm":
-                    default:
-                        precipitation.textContent = `Precipitation: ${currentWeatherInformation.precipMm} millimetres`;
-                        break;
+                if (precipitationUnit === "mm") {
+                    precipitationButton.textContent = "mm";
+                    precipitation.textContent = `Precipitation: ${currentWeatherInformation.precipMm} millimetres`;
+                } else {
+                    precipitationButton.textContent = "in";
+                    precipitation.textContent = `Precipitation: ${currentWeatherInformation.precipInch} inches`;
                 }
                 lastUpdated.textContent = `Last Updated: ${currentWeatherInformation.lastUpdated}`;
             } catch (error) {

@@ -16,10 +16,13 @@
     --weather-app-scale: 1.0;
     --weather-app-min-width: 28rem;
     --weather-app-max-width: 36rem;
+    --weather-app-info-buttons-size: 1.6rem;
+    --weather-app-info-buttons-font-size: 1rem;
     --weather-app-city-font-size: 2rem;
     --weather-app-region-font-size: 0.9rem;
     --weather-app-country-font-size: 1.4rem;
     --weather-app-temperature-font-size: 5rem;
+    --weather-app-icon-width: 3rem;
     --weather-app-condition-font-size: 1.2rem;
     --weather-app-wind-speed-font-size: 1rem;
     --weather-app-wind-direction-font-size: 1rem;
@@ -28,6 +31,7 @@
     --weather-app-last-updated-font-size: 0.7rem;
     --weather-app-search-bar-input-height: 2rem;
     --weather-app-search-bar-button-size: 2.4rem;
+    --weather-app-search-bar-button-font-size: 1rem;
 }
 
 .weather-app-container {
@@ -36,6 +40,32 @@
     gap: 0.5rem;
     min-width: calc(var(--weather-app-min-width, 28rem) * var(--weather-app-scale, 1));
     max-width: calc(var(--weather-app-max-width, 36rem) * var(--weather-app-scale, 1));
+}
+
+.weather-app-info-buttons {
+    grid-area: 1 / 1 / 2 / -1;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: calc(0.3rem * var(--weather-app-scale, 1));
+}
+
+.weather-app-info-buttons > button {
+    height: calc(var(--weather-app-info-buttons-size, 1.6rem) * var(--weather-app-scale, 1));
+    color: rgb(44, 44, 44);
+    font-size: calc(var(--weather-app-info-buttons-font-size, 1rem) * var(--weather-app-scale, 1));
+    outline: 1px solid rgb(49, 49, 49);
+    border: none;
+    border-radius: 9999px;
+    background-color: #eeeeee;
+    padding: 0rem calc(0.5rem * var(--weather-app-scale, 1));;
+}
+.weather-app-info-buttons > button:hover {
+    outline: 2px solid rgb(70, 70, 70);
+    background-color: #f8f8f8;
+}
+.weather-app-info-buttons > button:active {
+    outline: 2px solid rgb(32, 32, 32);
+    background-color: #d1d1d1;
 }
 
 .weather-app-info-container {
@@ -87,6 +117,7 @@
 
 .weather-app-icon {
     grid-area: 4 / 1 / 7 / 2;
+    width: calc(var(--weather-app-icon-width, 3rem) * var(--weather-app-scale, 1));
 }
 
 .weather-app-condition {
@@ -144,16 +175,17 @@
     width: calc(var(--weather-app-search-bar-button-size, 2.4rem) * var(--weather-app-scale, 1));
     height: calc(var(--weather-app-search-bar-button-size, 2.4rem) * var(--weather-app-scale, 1));
     color: rgb(44, 44, 44);
+    font-size: calc(var(--weather-app-search-bar-button-font-size, 1rem) * var(--weather-app-scale, 1));
     outline: 1px solid rgb(49, 49, 49);
     border: none;
     border-radius: 9999px;
-    background-color: #e7e7e7;
+    background-color: #eeeeee;
 }
 .weather-app-search-bar-button:hover {
     outline: 2px solid rgb(70, 70, 70);
-    background-color: #f3f3f3;
+    background-color: #f8f8f8;
 }
 .weather-app-search-bar-button:active {
     outline: 2px solid rgb(32, 32, 32);
-    background-color: #c5c5c5;
+    background-color: #d1d1d1;
 }
